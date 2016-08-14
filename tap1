@@ -1,0 +1,10 @@
+pty "pptp your-pptp-server-ip --nolaunchpppd --loglevel 0"
+name username
+remotename PPTP
+file /etc/ppp/options.pptp
+require-mppe-128
+refuse-eap noauth
+defaultroute
+replacedefaultroute 
+persist
+ipparam tap1

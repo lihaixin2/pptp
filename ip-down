@@ -1,0 +1,451 @@
+#!/bin/sh
+#
+# This script is run by the pppd _after_ the link is brought down.
+# It uses run-parts to run scripts in /etc/ppp/ip-down.d, so to delete
+# routes, unset IP addresses etc. you should create script(s) there.
+#
+# Be aware that other packages may include /etc/ppp/ip-down.d scripts (named
+# after that package), so choose local script names with that in mind.
+#
+# This script is called with the following arguments:
+#    Arg  Name                          Example
+#    $1   Interface name                ppp0
+#    $2   The tty                       ttyS1
+#    $3   The link speed                38400
+#    $4   Local IP number               12.34.56.78
+#    $5   Peer  IP number               12.34.56.99
+#    $6   Optional ``ipparam'' value    foo
+
+# The  environment is cleared before executing this script
+# so the path must be reset
+PATH=/usr/local/sbin:/usr/sbin:/sbin:/usr/local/bin:/usr/bin:/bin
+export PATH
+
+# These variables are for the use of the scripts run by run-parts
+PPP_IFACE="$1"
+PPP_TTY="$2"
+PPP_SPEED="$3"
+PPP_LOCAL="$4"
+PPP_REMOTE="$5"
+PPP_IPPARAM="$6"
+export PPP_IFACE PPP_TTY PPP_SPEED PPP_LOCAL PPP_REMOTE PPP_IPPARAM
+
+# as an additional convenience, $PPP_TTYNAME is set to the tty name,
+# stripped of /dev/ (if present) for easier matching.
+PPP_TTYNAME=`/usr/bin/basename "$2"`
+export PPP_TTYNAME 
+
+# If /var/log/ppp-ipupdown.log exists use it for logging.
+if [ -e /var/log/ppp-ipupdown.log ]; then
+  exec >> /var/log/ppp-ipupdown.log 2>&1
+  echo $0 $@
+  echo
+fi
+
+# This script can be used to override the .d files supplied by other packages.
+if [ -x /etc/ppp/ip-down.local ]; then
+  exec /etc/ppp/ip-down.local "$@"
+fi
+
+run-parts /etc/ppp/ip-down.d \
+  --arg="$1" --arg="$2" --arg="$3" --arg="$4" --arg="$5" --arg="$6"
+
+user=$PEERNAME
+uplink=$(egrep -v "^$|^#"  /etc/ppp/chap-secrets | grep "^${user}\ " | awk 'BEGIN {FS=" "} {print $5}')
+echo `date` $0 $@ $PEERNAME down >>/tmp/pon.txt
+if [ $uplink ];then
+            #iptables -t nat -D POSTROUTING -s $5 ! -o eth0 -j MASQUERADE
+                        ip route del 192.168.8.0/24 dev $1 table ${uplink} 
+                        ip rule del dev $1 table ${uplink}
+fi
+ip route flush table $6
+case "$6" in
+ tap1)
+     ip route del 172.16.1.0/24 dev tap_tap1 table $6 
+     ip rule del from  172.16.1.0/24 table $6
+     iptables -t nat -D POSTROUTING -s 172.16.1.0/24 -o $1 -j MASQUERADE
+    echo 未桥接 >/tmp/$6ip
+  chmod 644 /tmp/$6ip
+
+  ;;
+ tap2)
+     ip route del 172.16.2.0/24 dev tap_tap2 table $6 
+     ip rule del from  172.16.2.0/24 table $6
+     iptables -t nat -D POSTROUTING -s 172.16.2.0/24 -o $1 -j MASQUERADE
+ echo 未桥接 >/tmp/$6ip
+  chmod 644 /tmp/$6ip
+
+  ;;
+ tap3)
+     ip route del 172.16.3.0/24 dev tap_tap4 table $6 
+     ip rule del from  172.16.3.0/24 table $6
+     iptables -t nat -D POSTROUTING -s 172.16.3.0/24 -o $1 -j MASQUERADE
+     echo 未桥接 >/tmp/$6ip
+  chmod 644 /tmp/$6ip
+
+  ;;
+tap4)
+     ip route del 172.16.4.0/24 dev tap_tap4 table $6 
+     ip rule del from  172.16.4.0/24 table $6
+     iptables -t nat -D POSTROUTING -s 172.16.4.0/24 -o $1 -j MASQUERADE
+    echo 未桥接 >/tmp/$6ip
+  chmod 644 /tmp/$6ip
+
+  ;;
+tap5)
+     ip route del 172.16.5.0/24 dev tap_tap5 table $6 
+     ip rule del from  172.16.5.0/24 table $6
+     iptables -t nat -D POSTROUTING -s 172.16.5.0/24 -o $1 -j MASQUERADE
+    echo 未桥接 >/tmp/$6ip
+  chmod 644 /tmp/$6ip
+
+  ;;
+tap6)
+     ip route del 172.16.6.0/24 dev tap_tap6 table $6 
+     ip rule del from  172.16.6.0/24 table $6
+     iptables -t nat -D POSTROUTING -s 172.16.6.0/24 -o $1 -j MASQUERADE
+    echo 未桥接 >/tmp/$6ip
+  chmod 644 /tmp/$6ip
+
+  ;;
+tap7)
+     ip route del 172.16.7.0/24 dev tap_tap7 table $6 
+     ip rule del from  172.16.7.0/24 table $6
+     iptables -t nat -D POSTROUTING -s 172.16.7.0/24 -o $1 -j MASQUERADE
+    echo 未桥接 >/tmp/$6ip
+  chmod 644 /tmp/$6ip
+
+  ;;
+tap8)
+     ip route del 172.16.8.0/24 dev tap_tap8 table $6 
+     ip rule del from  172.16.8.0/24 table $6
+     iptables -t nat -D POSTROUTING -s 172.16.8.0/24 -o $1 -j MASQUERADE
+    echo 未桥接 >/tmp/$6ip
+  chmod 644 /tmp/$6ip
+
+  ;;
+tap9)
+     ip route del 172.16.9.0/24 dev tap_tap9 table $6 
+     ip rule del from  172.16.9.0/24 table $6
+     iptables -t nat -D POSTROUTING -s 172.16.9.0/24 -o $1 -j MASQUERADE
+     echo 未桥接 >/tmp/$6ip
+  chmod 644 /tmp/$6ip
+
+  ;;
+tap10)
+     ip route del 172.16.10.0/24 dev tap_tap10 table $6 
+     ip rule del from  172.16.10.0/24 table $6
+     iptables -t nat -D POSTROUTING -s 172.16.10.0/24 -o $1 -j MASQUERADE
+    echo 未桥接 >/tmp/$6ip
+  chmod 644 /tmp/$6ip
+
+  ;;
+tap11)
+     ip route del 172.16.11.0/24 dev tap_tap11 table $6 
+     ip rule del from  172.16.11.0/24 table $6
+     iptables -t nat -D POSTROUTING -s 172.16.11.0/24 -o $1 -j MASQUERADE
+     echo 未桥接 >/tmp/$6ip
+  chmod 644 /tmp/$6ip
+
+  ;;
+tap12)
+     ip route del 172.16.12.0/24 dev tap_tap12 table $6 
+     ip rule del from  172.16.12.0/24 table $6
+     iptables -t nat -D POSTROUTING -s 172.16.12.0/24 -o $1 -j MASQUERADE
+     echo 未桥接 >/tmp/$6ip
+  chmod 644 /tmp/$6ip
+
+  ;;
+tap13)
+     ip route del 172.16.13.0/24 dev tap_tap13 table $6 
+     ip rule del from  172.16.13.0/24 table $6
+     iptables -t nat -D POSTROUTING -s 172.16.13.0/24 -o $1 -j MASQUERADE
+     echo 未桥接 >/tmp/$6ip
+  chmod 644 /tmp/$6ip
+
+  ;;
+tap14)
+     ip route del 172.16.14.0/24 dev tap_tap14 table $6 
+     ip rule del from  172.16.14.0/24 table $6
+     iptables -t nat -D POSTROUTING -s 172.16.14.0/24 -o $1 -j MASQUERADE
+    echo 未桥接 >/tmp/$6ip
+  chmod 644 /tmp/$6ip
+
+  ;;
+tap15)
+     ip route del 172.16.15.0/24 dev tap_tap15 table $6 
+     ip rule del from  172.16.15.0/24 table $6
+     iptables -t nat -D POSTROUTING -s 172.16.15.0/24 -o $1 -j MASQUERADE
+ echo 未桥接 >/tmp/$6ip
+  chmod 644 /tmp/$6ip
+
+  ;;
+tap16)
+     ip route del 172.16.16.0/24 dev tap_tap16 table $6 
+     ip rule del from  172.16.16.0/24 table $6
+     iptables -t nat -D POSTROUTING -s 172.16.16.0/24 -o $1 -j MASQUERADE
+ echo 未桥接 >/tmp/$6ip
+  chmod 644 /tmp/$6ip
+
+  ;;
+tap17)
+     ip route del 172.16.17.0/24 dev tap_tap17 table $6 
+     ip rule del from  172.16.17.0/24 table $6
+     iptables -t nat -D POSTROUTING -s 172.16.17.0/24 -o $1 -j MASQUERADE
+ echo 未桥接 >/tmp/$6ip
+  chmod 644 /tmp/$6ip
+
+  ;;
+tap18)
+     ip route del 172.16.18.0/24 dev tap_tap18 table $6 
+     ip rule del from  172.16.18.0/24 table $6
+     iptables -t nat -D POSTROUTING -s 172.16.18.0/24 -o $1 -j MASQUERADE
+ echo 未桥接 >/tmp/$6ip
+  chmod 644 /tmp/$6ip
+
+  ;;
+tap19)
+     ip route del 172.16.19.0/24 dev tap_tap19 table $6 
+     ip rule del from  172.16.19.0/24 table $6
+     iptables -t nat -D POSTROUTING -s 172.16.19.0/24 -o $1 -j MASQUERADE
+    echo 未桥接 >/tmp/$6ip
+  chmod 644 /tmp/$6ip
+
+  ;;
+tap20)
+     ip route del 172.16.20.0/24 dev tap_tap20 table $6 
+     ip rule del from  172.16.20.0/24 table $6
+     iptables -t nat -D POSTROUTING -s 172.16.20.0/24 -o $1 -j MASQUERADE
+    echo 未桥接 >/tmp/$6ip
+  chmod 644 /tmp/$6ip
+
+  ;;
+tap21)
+     ip route del 172.16.21.0/24 dev tap_tap21 table $6 
+     ip rule del from  172.16.21.0/24 table $6
+     iptables -t nat -D POSTROUTING -s 172.16.21.0/24 -o $1 -j MASQUERADE
+     echo 未桥接 >/tmp/$6ip
+  chmod 644 /tmp/$6ip
+
+  ;;
+tap22)
+     ip route del 172.16.22.0/24 dev tap_tap22 table $6 
+     ip rule del from  172.16.22.0/24 table $6
+     iptables -t nat -D POSTROUTING -s 172.16.22.0/24 -o $1 -j MASQUERADE
+    echo 未桥接 >/tmp/$6ip
+  chmod 644 /tmp/$6ip
+
+  ;;
+tap23)
+     ip route del 172.16.23.0/24 dev tap_tap23 table $6 
+     ip rule del from  172.16.23.0/24 table $6
+     iptables -t nat -D POSTROUTING -s 172.16.23.0/24 -o $1 -j MASQUERADE
+     echo 未桥接 >/tmp/$6ip
+  chmod 644 /tmp/$6ip
+
+  ;;
+tap24)
+     ip route del 172.16.24.0/24 dev tap_tap24 table $6 
+     ip rule del from  172.16.24.0/24 table $6
+     iptables -t nat -D POSTROUTING -s 172.16.24.0/24 -o $1 -j MASQUERADE
+    echo 未桥接 >/tmp/$6ip
+  chmod 644 /tmp/$6ip
+ 
+  ;;
+
+tap25)
+     ip route del 172.16.25.0/24 dev tap_tap25 table $6 
+     ip rule del from  172.16.25.0/24 table $6
+     iptables -t nat -D POSTROUTING -s 172.16.25.0/24 -o $1 -j MASQUERADE
+     echo 未桥接 >/tmp/$6ip
+  chmod 644 /tmp/$6ip
+  ;;
+tap26)
+     ip route del 172.16.26.0/24 dev tap_tap26 table $6 
+     ip rule del from  172.16.26.0/24 table $6
+     iptables -t nat -D POSTROUTING -s 172.16.26.0/24 -o $1 -j MASQUERADE
+echo 未桥接 >/tmp/$6ip
+chmod 644 /tmp/$6ip
+
+  ;;
+tap27)
+     ip route del 172.16.27.0/24 dev tap_tap27 table $6 
+     ip rule del from  172.16.27.0/24 table $6
+     iptables -t nat -D POSTROUTING -s 172.16.27.0/24 -o $1 -j MASQUERADE
+    echo 未桥接 >/tmp/$6ip
+  chmod 644 /tmp/$6ip
+
+  ;;
+tap28)
+     ip route del 172.16.28.0/24 dev tap_tap28 table $6 
+     ip rule del from  172.16.28.0/24 table $6
+     iptables -t nat -D POSTROUTING -s 172.16.28.0/24 -o $1 -j MASQUERADE
+    echo 未桥接 >/tmp/$6ip
+  chmod 644 /tmp/$6ip
+
+  ;;
+tap29)
+     ip route del 172.16.29.0/24 dev tap_tap29 table $6 
+     ip rule del from  172.16.29.0/24 table $6
+     iptables -t nat -D POSTROUTING -s 172.16.29.0/24 -o $1 -j MASQUERADE
+echo 未桥接 >/tmp/$6ip
+  chmod 644 /tmp/$6ip
+
+  ;;
+tap30)
+     ip route del 172.16.30.0/24 dev tap_tap30 table $6 
+     ip rule del from  172.16.30.0/24 table $6
+     iptables -t nat -D POSTROUTING -s 172.16.30.0/24 -o $1 -j MASQUERADE
+    echo 未桥接 >/tmp/$6ip
+  chmod 644 /tmp/$6ip
+  ;;
+tap31)
+     ip route del 172.16.31.0/24 dev tap_tap31 table $6 
+     ip rule del from  172.16.31.0/24 table $6
+     iptables -t nat -D POSTROUTING -s 172.16.31.0/24 -o $1 -j MASQUERADE
+    echo 未桥接 >/tmp/$6ip
+  chmod 644 /tmp/$6ip
+  ;;
+tap32)
+     ip route del 172.16.32.0/24 dev tap_tap32 table $6 
+     ip rule del from  172.16.32.0/24 table $6
+     iptables -t nat -D POSTROUTING -s 172.16.32.0/24 -o $1 -j MASQUERADE
+    echo 未桥接 >/tmp/$6ip
+  chmod 644 /tmp/$6ip
+  ;;
+tap33)
+     ip route del 172.16.33.0/24 dev tap_tap33 table $6 
+     ip rule del from  172.16.33.0/24 table $6
+     iptables -t nat -D POSTROUTING -s 172.16.33.0/24 -o $1 -j MASQUERADE
+    echo 未桥接 >/tmp/$6ip
+  chmod 644 /tmp/$6ip
+  ;;
+tap34)
+     ip route del 172.16.34.0/24 dev tap_tap34 table $6 
+     ip rule del from  172.16.34.0/24 table $6
+     iptables -t nat -D POSTROUTING -s 172.16.34.0/24 -o $1 -j MASQUERADE
+    echo 未桥接 >/tmp/$6ip
+  chmod 644 /tmp/$6ip
+  ;;
+tap35)
+     ip route del 172.16.35.0/24 dev tap_tap35 table $6 
+     ip rule del from  172.16.35.0/24 table $6
+     iptables -t nat -D POSTROUTING -s 172.16.35.0/24 -o $1 -j MASQUERADE
+    echo 未桥接 >/tmp/$6ip
+  chmod 644 /tmp/$6ip
+  ;;
+tap36)
+     ip route del 172.16.36.0/24 dev tap_tap36 table $6 
+     ip rule del from  172.16.36.0/24 table $6
+     iptables -t nat -D POSTROUTING -s 172.16.36.0/24 -o $1 -j MASQUERADE
+    echo 未桥接 >/tmp/$6ip
+  chmod 644 /tmp/$6ip
+  ;;
+tap37)
+     ip route del 172.16.37.0/24 dev tap_tap37 table $6 
+     ip rule del from  172.16.37.0/24 table $6
+     iptables -t nat -D POSTROUTING -s 172.16.37.0/24 -o $1 -j MASQUERADE
+    echo 未桥接 >/tmp/$6ip
+  chmod 644 /tmp/$6ip
+  ;;
+tap38)
+     ip route del 172.16.38.0/24 dev tap_tap38 table $6 
+     ip rule del from  172.16.38.0/24 table $6
+     iptables -t nat -D POSTROUTING -s 172.16.38.0/24 -o $1 -j MASQUERADE
+    echo 未桥接 >/tmp/$6ip
+  chmod 644 /tmp/$6ip
+  ;;
+
+tap39)
+     ip route del 172.16.39.0/24 dev tap_tap39 table $6 
+     ip rule del from  172.16.39.0/24 table $6
+     iptables -t nat -D POSTROUTING -s 172.16.39.0/24 -o $1 -j MASQUERADE
+    echo 未桥接 >/tmp/$6ip
+  chmod 644 /tmp/$6ip
+  ;;
+
+tap40)
+     ip route del 172.16.40.0/24 dev tap_tap40 table $6 
+     ip rule del from  172.16.40.0/24 table $6
+     iptables -t nat -D POSTROUTING -s 172.16.40.0/24 -o $1 -j MASQUERADE
+    echo 未桥接 >/tmp/$6ip
+  chmod 644 /tmp/$6ip
+  ;;
+tap41)
+     ip route del 172.16.41.0/24 dev tap_tap41 table $6 
+     ip rule del from  172.16.41.0/24 table $6
+     iptables -t nat -D POSTROUTING -s 172.16.41.0/24 -o $1 -j MASQUERADE
+    echo 未桥接 >/tmp/$6ip
+  chmod 644 /tmp/$6ip
+  ;;
+
+tap42)
+     ip route del 172.16.42.0/24 dev tap_tap42 table $6 
+     ip rule del from  172.16.42.0/24 table $6
+     iptables -t nat -D POSTROUTING -s 172.16.42.0/24 -o $1 -j MASQUERADE
+    echo 未桥接 >/tmp/$6ip
+  chmod 644 /tmp/$6ip
+  ;;
+tap43)
+     ip route del 172.16.43.0/24 dev tap_tap43 table $6 
+     ip rule del from  172.16.43.0/24 table $6
+     iptables -t nat -D POSTROUTING -s 172.16.43.0/24 -o $1 -j MASQUERADE
+    echo 未桥接 >/tmp/$6ip
+  chmod 644 /tmp/$6ip
+  ;;
+tap44)
+     ip route del 172.16.44.0/24 dev tap_tap44 table $6 
+     ip rule del from  172.16.44.0/24 table $6
+     iptables -t nat -D POSTROUTING -s 172.16.44.0/24 -o $1 -j MASQUERADE
+    echo 未桥接 >/tmp/$6ip
+  chmod 644 /tmp/$6ip
+  ;;
+tap45)
+     ip route del 172.16.45.0/24 dev tap_tap45 table $6 
+     ip rule del from  172.16.45.0/24 table $6
+     iptables -t nat -D POSTROUTING -s 172.16.45.0/24 -o $1 -j MASQUERADE
+    echo 未桥接 >/tmp/$6ip
+  chmod 644 /tmp/$6ip
+  ;;
+tap46)
+     ip route del 172.16.46.0/24 dev tap_tap46 table $6 
+     ip rule del from  172.16.46.0/24 table $6
+     iptables -t nat -D POSTROUTING -s 172.16.46.0/24 -o $1 -j MASQUERADE
+    echo 未桥接 >/tmp/$6ip
+  chmod 644 /tmp/$6ip
+  ;;
+tap47)
+     ip route del 172.16.47.0/24 dev tap_tap47 table $6 
+     ip rule del from  172.16.47.0/24 table $6
+     iptables -t nat -D POSTROUTING -s 172.16.47.0/24 -o $1 -j MASQUERADE
+    echo 未桥接 >/tmp/$6ip
+  chmod 644 /tmp/$6ip
+  ;;
+tap48)
+     ip route del 172.16.48.0/24 dev tap_tap48 table $6 
+     ip rule del from  172.16.48.0/24 table $6
+     iptables -t nat -D POSTROUTING -s 172.16.48.0/24 -o $1 -j MASQUERADE
+    echo 未桥接 >/tmp/$6ip
+  chmod 644 /tmp/$6ip
+  ;;
+tap49)
+     ip route del 172.16.49.0/24 dev tap_tap49 table $6 
+     ip rule del from  172.16.49.0/24 table $6
+     iptables -t nat -D POSTROUTING -s 172.16.49.0/24 -o $1 -j MASQUERADE
+    echo 未桥接 >/tmp/$6ip
+  chmod 644 /tmp/$6ip
+  ;;
+tap50)
+     ip route del 172.16.50.0/24 dev tap_tap50 table $6 
+     ip rule del from  172.16.50.0/24 table $6
+     iptables -t nat -D POSTROUTING -s 172.16.50.0/24 -o $1 -j MASQUERADE
+    echo 未桥接 >/tmp/$6ip
+  chmod 644 /tmp/$6ip
+  ;;
+
+ *)
+
+esac
+chmod 666 /tmp/$6ip
+ip route flush cache
+exit 0

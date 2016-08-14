@@ -1,0 +1,761 @@
+#!/bin/sh
+#
+# This script is run by the pppd after the link is established.
+# It uses run-parts to run scripts in /etc/ppp/ip-up.d, so to add routes,
+# set IP address, run the mailq etc. you should create script(s) there.
+#
+# Be aware that other packages may include /etc/ppp/ip-up.d scripts (named
+# after that package), so choose local script names with that in mind.
+#
+# This script is called with the following arguments:
+#    Arg  Name                          Example
+#    $1   Interface name                ppp0
+#    $2   The tty                       ttyS1
+#    $3   The link speed                38400
+#    $4   Local IP number               12.34.56.78
+#    $5   Peer  IP number               12.34.56.99
+#    $6   Optional ``ipparam'' value    foo
+
+# The  environment is cleared before executing this script
+# so the path must be reset
+PATH=/usr/local/sbin:/usr/sbin:/sbin:/usr/local/bin:/usr/bin:/bin
+export PATH
+
+# These variables are for the use of the scripts run by run-parts
+PPP_IFACE="$1"
+PPP_TTY="$2"
+PPP_SPEED="$3"
+PPP_LOCAL="$4"
+PPP_REMOTE="$5"
+PPP_IPPARAM="$6"
+export PPP_IFACE PPP_TTY PPP_SPEED PPP_LOCAL PPP_REMOTE PPP_IPPARAM
+
+if [ -z "`grep tap1 /etc/iproute2/rt_tables`" ]; then
+  echo "101 tap1" >> /etc/iproute2/rt_tables
+fi
+
+if [ -z "`grep tap2 /etc/iproute2/rt_tables`" ]; then
+  echo "102 tap2" >> /etc/iproute2/rt_tables
+fi
+
+if [ -z "`grep tap3 /etc/iproute2/rt_tables`" ]; then
+  echo "103 tap3" >> /etc/iproute2/rt_tables
+fi
+
+
+if [ -z "`grep tap4 /etc/iproute2/rt_tables`" ]; then
+  echo "104 tap4" >> /etc/iproute2/rt_tables
+fi
+
+if [ -z "`grep tap5 /etc/iproute2/rt_tables`" ]; then
+  echo "105 tap5" >> /etc/iproute2/rt_tables
+fi
+
+if [ -z "`grep tap6 /etc/iproute2/rt_tables`" ]; then
+  echo "106 tap6" >> /etc/iproute2/rt_tables
+fi
+
+if [ -z "`grep tap7 /etc/iproute2/rt_tables`" ]; then
+  echo "107 tap7" >> /etc/iproute2/rt_tables
+fi
+
+if [ -z "`grep tap8 /etc/iproute2/rt_tables`" ]; then
+  echo "108 tap8" >> /etc/iproute2/rt_tables
+fi
+
+if [ -z "`grep tap9 /etc/iproute2/rt_tables`" ]; then
+  echo "109 tap9" >> /etc/iproute2/rt_tables
+fi
+
+if [ -z "`grep tap10 /etc/iproute2/rt_tables`" ]; then
+  echo "110 tap10" >> /etc/iproute2/rt_tables
+fi
+if [ -z "`grep tap11 /etc/iproute2/rt_tables`" ]; then
+  echo "111 tap11" >> /etc/iproute2/rt_tables
+fi
+
+if [ -z "`grep tap12 /etc/iproute2/rt_tables`" ]; then
+  echo "112 tap12" >> /etc/iproute2/rt_tables
+fi
+
+if [ -z "`grep tap13 /etc/iproute2/rt_tables`" ]; then
+  echo "113 tap13" >> /etc/iproute2/rt_tables
+fi
+
+
+if [ -z "`grep tap14 /etc/iproute2/rt_tables`" ]; then
+  echo "114 tap14" >> /etc/iproute2/rt_tables
+fi
+
+if [ -z "`grep tap15 /etc/iproute2/rt_tables`" ]; then
+  echo "115 tap15" >> /etc/iproute2/rt_tables
+fi
+
+if [ -z "`grep tap16 /etc/iproute2/rt_tables`" ]; then
+  echo "116 tap16" >> /etc/iproute2/rt_tables
+fi
+
+if [ -z "`grep tap17 /etc/iproute2/rt_tables`" ]; then
+  echo "117 tap17" >> /etc/iproute2/rt_tables
+fi
+
+if [ -z "`grep tap18 /etc/iproute2/rt_tables`" ]; then
+  echo "118 tap18" >> /etc/iproute2/rt_tables
+fi
+
+if [ -z "`grep tap19 /etc/iproute2/rt_tables`" ]; then
+  echo "119 tap19" >> /etc/iproute2/rt_tables
+fi
+
+if [ -z "`grep tap20 /etc/iproute2/rt_tables`" ]; then
+  echo "120 tap20" >> /etc/iproute2/rt_tables
+fi
+
+if [ -z "`grep tap21 /etc/iproute2/rt_tables`" ]; then
+  echo "121 tap21" >> /etc/iproute2/rt_tables
+fi
+
+if [ -z "`grep tap22 /etc/iproute2/rt_tables`" ]; then
+  echo "122 tap22" >> /etc/iproute2/rt_tables
+fi
+
+if [ -z "`grep tap23 /etc/iproute2/rt_tables`" ]; then
+  echo "123 tap23" >> /etc/iproute2/rt_tables
+fi
+
+
+if [ -z "`grep tap24 /etc/iproute2/rt_tables`" ]; then
+  echo "124 tap24" >> /etc/iproute2/rt_tables
+fi
+
+if [ -z "`grep tap25 /etc/iproute2/rt_tables`" ]; then
+  echo "125 tap25" >> /etc/iproute2/rt_tables
+fi
+
+
+if [ -z "`grep tap26 /etc/iproute2/rt_tables`" ]; then
+  echo "126 tap26" >> /etc/iproute2/rt_tables
+fi
+
+if [ -z "`grep tap27 /etc/iproute2/rt_tables`" ]; then
+  echo "127 tap27" >> /etc/iproute2/rt_tables
+fi
+
+if [ -z "`grep tap28 /etc/iproute2/rt_tables`" ]; then
+  echo "128 tap28" >> /etc/iproute2/rt_tables
+fi
+
+if [ -z "`grep tap29 /etc/iproute2/rt_tables`" ]; then
+  echo "129 tap29" >> /etc/iproute2/rt_tables
+fi
+
+if [ -z "`grep tap30 /etc/iproute2/rt_tables`" ]; then
+  echo "130 tap30" >> /etc/iproute2/rt_tables
+fi
+
+if [ -z "`grep tap31 /etc/iproute2/rt_tables`" ]; then
+  echo "131 tap31" >> /etc/iproute2/rt_tables
+fi
+
+if [ -z "`grep tap32 /etc/iproute2/rt_tables`" ]; then
+  echo "132 tap32" >> /etc/iproute2/rt_tables
+fi
+
+if [ -z "`grep tap33 /etc/iproute2/rt_tables`" ]; then
+  echo "133 tap33" >> /etc/iproute2/rt_tables
+fi
+if [ -z "`grep tap34 /etc/iproute2/rt_tables`" ]; then
+  echo "134 tap34" >> /etc/iproute2/rt_tables
+fi
+
+if [ -z "`grep tap35 /etc/iproute2/rt_tables`" ]; then
+  echo "135 tap35" >> /etc/iproute2/rt_tables
+fi
+
+if [ -z "`grep tap36 /etc/iproute2/rt_tables`" ]; then
+  echo "136 tap36" >> /etc/iproute2/rt_tables
+fi
+
+if [ -z "`grep tap37 /etc/iproute2/rt_tables`" ]; then
+  echo "137 tap37" >> /etc/iproute2/rt_tables
+fi
+
+if [ -z "`grep tap38 /etc/iproute2/rt_tables`" ]; then
+  echo "138 tap38" >> /etc/iproute2/rt_tables
+fi
+
+if [ -z "`grep tap39 /etc/iproute2/rt_tables`" ]; then
+  echo "139 tap39" >> /etc/iproute2/rt_tables
+fi
+
+if [ -z "`grep tap40 /etc/iproute2/rt_tables`" ]; then
+  echo "140 tap40" >> /etc/iproute2/rt_tables
+fi
+
+if [ -z "`grep tap41 /etc/iproute2/rt_tables`" ]; then
+  echo "141 tap41" >> /etc/iproute2/rt_tables
+fi
+
+if [ -z "`grep tap42 /etc/iproute2/rt_tables`" ]; then
+  echo "142 tap42" >> /etc/iproute2/rt_tables
+fi
+
+if [ -z "`grep tap43 /etc/iproute2/rt_tables`" ]; then
+  echo "143 tap43" >> /etc/iproute2/rt_tables
+fi
+if [ -z "`grep tap44 /etc/iproute2/rt_tables`" ]; then
+  echo "144 tap44" >> /etc/iproute2/rt_tables
+fi
+
+if [ -z "`grep tap45 /etc/iproute2/rt_tables`" ]; then
+  echo "145 tap45" >> /etc/iproute2/rt_tables
+fi
+
+if [ -z "`grep tap46 /etc/iproute2/rt_tables`" ]; then
+  echo "146 tap46" >> /etc/iproute2/rt_tables
+fi
+
+if [ -z "`grep tap47 /etc/iproute2/rt_tables`" ]; then
+  echo "147 tap47" >> /etc/iproute2/rt_tables
+fi
+
+if [ -z "`grep tap48 /etc/iproute2/rt_tables`" ]; then
+  echo "148 tap48" >> /etc/iproute2/rt_tables
+fi
+
+if [ -z "`grep tap49 /etc/iproute2/rt_tables`" ]; then
+  echo "149 tap49" >> /etc/iproute2/rt_tables
+fi
+
+if [ -z "`grep tap50 /etc/iproute2/rt_tables`" ]; then
+  echo "150 tap50" >> /etc/iproute2/rt_tables
+fi
+
+# as an additional convenience, $PPP_TTYNAME is set to the tty name,
+# stripped of /dev/ (if present) for easier matching.
+PPP_TTYNAME=`/usr/bin/basename "$2"`
+export PPP_TTYNAME 
+
+# If /var/log/ppp-ipupdown.log exists use it for logging.
+if [ -e /var/log/ppp-ipupdown.log ]; then
+  exec > /var/log/ppp-ipupdown.log 2>&1
+  echo $0 $@
+  echo
+fi
+
+# This script can be used to override the .d files supplied by other packages.
+if [ -x /etc/ppp/ip-up.local ]; then
+  exec /etc/ppp/ip-up.local "$@"
+fi
+
+run-parts /etc/ppp/ip-up.d \
+  --arg="$1" --arg="$2" --arg="$3" --arg="$4" --arg="$5" --arg="$6"
+
+# if pon was called with the "quick" argument, stop pppd
+if [ -e /var/run/ppp-quick ]; then
+  rm /var/run/ppp-quick
+  wait
+  kill $PPPD_PID
+fi
+
+echo 1 > /proc/sys/net/ipv4/ip_forward
+echo `date` $0 $@ $PEERNAME up>>/tmp/pon.txt
+#/sbin/ifconfig $1 mtu 1500
+user=$PEERNAME
+uplink=$(egrep -v "^$|^#"  /etc/ppp/chap-secrets | grep "^${user}\ " | awk 'BEGIN {FS=" "} {print $5}')
+ip route add 192.168.8.0/24 dev $1 table ${uplink} 
+ip rule add dev $1 table ${uplink}
+if [ $uplink ];then
+            iptables -t nat -I POSTROUTING -s $5 ! -o eth0 -j MASQUERADE
+fi
+
+case "$6" in
+ tap1)
+     ip route add 172.16.1.0/24 dev tap_tap1 table $6 
+     ip route add default via $5 table $6 
+     ip rule add from  172.16.1.0/24 table $6
+   /sbin/ifconfig $1 mtu 1400
+     iptables -t nat -I POSTROUTING -s 172.16.1.0/24 -o $1 -j MASQUERADE
+    adslip=`dig +short myip.opendns.com @resolver1.opendns.com -b 172.16.1.1`
+    echo $adslip >/tmp/$6ip
+
+
+  ;;
+ tap2)
+     ip route add 172.16.2.0/24 dev tap_tap2 table $6 
+     ip route add default via $5 table $6 
+     ip rule add from  172.16.2.0/24 table $6
+  /sbin/ifconfig $1 mtu 1400
+     iptables -t nat -I POSTROUTING -s 172.16.2.0/24 -o $1 -j MASQUERADE
+ adslip=`dig +short myip.opendns.com @resolver1.opendns.com -b 172.16.2.1`
+    echo $adslip >/tmp/$6ip
+
+  ;;
+ tap3)
+     ip route add 172.16.3.0/24 dev tap_tap3 table $6 
+     ip route add default via $5 table $6 
+     ip rule add from  172.16.3.0/24 table $6
+  /sbin/ifconfig $1 mtu 1396
+     iptables -t nat -I POSTROUTING -s 172.16.3.0/24 -o $1 -j MASQUERADE
+ adslip=`dig +short myip.opendns.com @resolver1.opendns.com -b 172.16.3.1`
+    echo $adslip >/tmp/$6ip
+
+  ;;
+tap4)
+     ip route add 172.16.4.0/24 dev tap_tap4 table $6 
+     ip route add default via $5 table $6 
+     ip rule add from  172.16.4.0/24 table $6
+  /sbin/ifconfig $1 mtu 1400
+     iptables -t nat -I POSTROUTING -s 172.16.4.0/24 -o $1 -j MASQUERADE
+ adslip=`dig +short myip.opendns.com @resolver1.opendns.com -b 172.16.4.1`
+    echo $adslip >/tmp/$6ip
+
+  ;;
+tap5)
+     ip route add 172.16.5.0/24 dev tap_tap5 table $6 
+     ip route add default via $5 table $6 
+     ip rule add from  172.16.5.0/24 table $6
+  /sbin/ifconfig $1 mtu 1400
+     iptables -t nat -I POSTROUTING -s 172.16.5.0/24 -o $1 -j MASQUERADE
+ adslip=`dig +short myip.opendns.com @resolver1.opendns.com -b 172.16.5.1`
+    echo $adslip >/tmp/$6ip
+
+  ;;
+tap6)
+     ip route add 172.16.6.0/24 dev tap_tap6 table $6 
+     ip route add default via $5 table $6 
+     ip rule add from  172.16.6.0/24 table $6
+  /sbin/ifconfig $1 mtu 1400
+     iptables -t nat -I POSTROUTING -s 172.16.6.0/24 -o $1 -j MASQUERADE
+    adslip=`dig +short myip.opendns.com @resolver1.opendns.com -b 172.16.6.1`
+    echo $adslip >/tmp/$6ip
+
+  ;;
+tap7)
+     ip route add 172.16.7.0/24 dev tap_tap7 table $6 
+     ip route add default via $5 table $6 
+     ip rule add from  172.16.7.0/24 table $6
+  /sbin/ifconfig $1 mtu 1400
+     iptables -t nat -I POSTROUTING -s 172.16.7.0/24 -o $1 -j MASQUERADE
+ adslip=`dig +short myip.opendns.com @resolver1.opendns.com -b 172.16.7.1`
+    echo $adslip >/tmp/$6ip
+
+  ;;
+tap8)
+     ip route add 172.16.8.0/24 dev tap_tap8 table $6 
+     ip route add default via $5 table $6 
+     ip rule add from  172.16.8.0/24 table $6
+  /sbin/ifconfig $1 mtu 1400
+     iptables -t nat -I POSTROUTING -s 172.16.8.0/24 -o $1 -j MASQUERADE
+ adslip=`dig +short myip.opendns.com @resolver1.opendns.com -b 172.16.8.1`
+    echo $adslip >/tmp/$6ip
+
+  ;;
+tap9)
+     ip route add 172.16.9.0/24 dev tap_tap9 table $6 
+     ip route add default via $5 table $6 
+     ip rule add from  172.16.9.0/24 table $6
+  /sbin/ifconfig $1 mtu 1400
+     iptables -t nat -I POSTROUTING -s 172.16.9.0/24 -o $1 -j MASQUERADE
+ adslip=`dig +short myip.opendns.com @resolver1.opendns.com -b 172.16.9.1`
+    echo $adslip >/tmp/$6ip
+
+  ;;
+tap10)
+     ip route add 172.16.10.0/24 dev tap_tap10 table $6 
+     ip route add default via $5 table $6 
+     ip rule add from  172.16.10.0/24 table $6
+  /sbin/ifconfig $1 mtu 1400
+     iptables -t nat -I POSTROUTING -s 172.16.10.0/24 -o $1 -j MASQUERADE
+ adslip=`dig +short myip.opendns.com @resolver1.opendns.com -b 172.16.10.1`
+    echo $adslip >/tmp/$6ip
+
+  ;;
+tap11)
+     ip route add 172.16.11.0/24 dev tap_tap11 table $6 
+     ip route add default via $5 table $6 
+     ip rule add from  172.16.11.0/24 table $6
+  /sbin/ifconfig $1 mtu 1400
+     iptables -t nat -I POSTROUTING -s 172.16.11.0/24 -o $1 -j MASQUERADE
+ adslip=`dig +short myip.opendns.com @resolver1.opendns.com -b 172.16.11.1`
+    echo $adslip >/tmp/$6ip
+
+  ;;
+tap12)
+     ip route add 172.16.12.0/24 dev tap_tap12 table $6 
+     ip route add default via $5 table $6 
+     ip rule add from  172.16.12.0/24 table $6
+  /sbin/ifconfig $1 mtu 1400
+     iptables -t nat -I POSTROUTING -s 172.16.12.0/24 -o $1 -j MASQUERADE
+ adslip=`dig +short myip.opendns.com @resolver1.opendns.com -b 172.16.12.1`
+    echo $adslip >/tmp/$6ip
+
+  ;;
+tap13)
+     ip route add 172.16.13.0/24 dev tap_tap13 table $6 
+     ip route add default via $5 table $6 
+     ip rule add from  172.16.13.0/24 table $6
+  /sbin/ifconfig $1 mtu 1400
+     iptables -t nat -I POSTROUTING -s 172.16.13.0/24 -o $1 -j MASQUERADE
+ adslip=`dig +short myip.opendns.com @resolver1.opendns.com -b 172.16.13.1`
+    echo $adslip >/tmp/$6ip
+
+  ;;
+tap14)
+     ip route add 172.16.14.0/24 dev tap_tap14 table $6 
+     ip route add default via $5 table $6 
+     ip rule add from  172.16.14.0/24 table $6
+  /sbin/ifconfig $1 mtu 1400
+     iptables -t nat -I POSTROUTING -s 172.16.14.0/24 -o $1 -j MASQUERADE
+ adslip=`dig +short myip.opendns.com @resolver1.opendns.com -b 172.16.14.1`
+    echo $adslip >/tmp/$6ip
+
+  ;;
+tap15)
+     ip route add 172.16.15.0/24 dev tap_tap15 table $6 
+     ip route add default via $5 table $6 
+     ip rule add from  172.16.15.0/24 table $6
+  /sbin/ifconfig $1 mtu 1400
+     iptables -t nat -I POSTROUTING -s 172.16.15.0/24 -o $1 -j MASQUERADE
+ adslip=`dig +short myip.opendns.com @resolver1.opendns.com -b 172.16.15.1`
+    echo $adslip >/tmp/$6ip
+
+  ;;
+tap16)
+     ip route add 172.16.16.0/24 dev tap_tap16 table $6 
+     ip route add default via $5 table $6 
+     ip rule add from  172.16.16.0/24 table $6
+  /sbin/ifconfig $1 mtu 1400
+     iptables -t nat -I POSTROUTING -s 172.16.16.0/24 -o $1 -j MASQUERADE
+ adslip=`dig +short myip.opendns.com @resolver1.opendns.com -b 172.16.16.1`
+    echo $adslip >/tmp/$6ip
+
+  ;;
+tap17)
+     ip route add 172.16.17.0/24 dev tap_tap17 table $6 
+     ip route add default via $5 table $6 
+     ip rule add from  172.16.17.0/24 table $6
+  /sbin/ifconfig $1 mtu 1400
+     iptables -t nat -I POSTROUTING -s 172.16.17.0/24 -o $1 -j MASQUERADE
+ adslip=`dig +short myip.opendns.com @resolver1.opendns.com -b 172.16.17.1`
+    echo $adslip >/tmp/$6ip
+
+  ;;
+tap18)
+     ip route add 172.16.18.0/24 dev tap_tap18 table $6 
+     ip route add default via $5 table $6 
+     ip rule add from  172.16.18.0/24 table $6
+  /sbin/ifconfig $1 mtu 1400
+     iptables -t nat -I POSTROUTING -s 172.16.18.0/24 -o $1 -j MASQUERADE
+ adslip=`dig +short myip.opendns.com @resolver1.opendns.com -b 172.16.18.1`
+    echo $adslip >/tmp/$6ip
+
+  ;;
+tap19)
+     ip route add 172.16.19.0/24 dev tap_tap19 table $6 
+     ip route add default via $5 table $6 
+     ip rule add from  172.16.19.0/24 table $6
+  /sbin/ifconfig $1 mtu 1400
+     iptables -t nat -I POSTROUTING -s 172.16.19.0/24 -o $1 -j MASQUERADE
+ adslip=`dig +short myip.opendns.com @resolver1.opendns.com -b 172.16.19.1`
+    echo $adslip >/tmp/$6ip
+
+  ;;
+tap20)
+     ip route add 172.16.20.0/24 dev tap_tap20 table $6 
+     ip route add default via $5 table $6 
+     ip rule add from  172.16.20.0/24 table $6
+  /sbin/ifconfig $1 mtu 1400
+     iptables -t nat -I POSTROUTING -s 172.16.20.0/24 -o $1 -j MASQUERADE
+ adslip=`dig +short myip.opendns.com @resolver1.opendns.com -b 172.16.20.1`
+    echo $adslip >/tmp/$6ip
+
+  ;;
+tap21)
+     ip route add 172.16.21.0/24 dev tap_tap21 table $6 
+     ip route add default via $5 table $6 
+     ip rule add from  172.16.21.0/24 table $6
+  /sbin/ifconfig $1 mtu 1400
+     iptables -t nat -I POSTROUTING -s 172.16.21.0/24 -o $1 -j MASQUERADE
+ adslip=`dig +short myip.opendns.com @resolver1.opendns.com -b 172.16.21.1`
+    echo $adslip >/tmp/$6ip
+
+  ;;
+tap22)
+     ip route add 172.16.22.0/24 dev tap_tap22 table $6 
+     ip route add default via $5 table $6 
+     ip rule add from  172.16.22.0/24 table $6
+  /sbin/ifconfig $1 mtu 1400
+     iptables -t nat -I POSTROUTING -s 172.16.22.0/24 -o $1 -j MASQUERADE
+ adslip=`dig +short myip.opendns.com @resolver1.opendns.com -b 172.16.22.1`
+    echo $adslip >/tmp/$6ip
+
+  ;;
+tap23)
+     ip route add 172.16.23.0/24 dev tap_tap23 table $6 
+     ip route add default via $5 table $6 
+     ip rule add from  172.16.23.0/24 table $6
+  /sbin/ifconfig $1 mtu 1400
+     iptables -t nat -I POSTROUTING -s 172.16.23.0/24 -o $1 -j MASQUERADE
+ adslip=`dig +short myip.opendns.com @resolver1.opendns.com -b 172.16.23.1`
+    echo $adslip >/tmp/$6ip
+
+  ;;
+tap24)
+     ip route add 172.16.24.0/24 dev tap_tap24 table $6 
+     ip route add default via $5 table $6 
+     ip rule add from  172.16.24.0/24 table $6
+  /sbin/ifconfig $1 mtu 1400
+     iptables -t nat -I POSTROUTING -s 172.16.24.0/24 -o $1 -j MASQUERADE
+ adslip=`dig +short myip.opendns.com @resolver1.opendns.com -b 172.16.24.1`
+    echo $adslip >/tmp/$6ip
+
+  ;;
+tap25)
+     ip route add 172.16.25.0/24 dev tap_tap25 table $6 
+     ip route add default via $5 table $6 
+     ip rule add from  172.16.25.0/24 table $6
+  /sbin/ifconfig $1 mtu 1400
+     iptables -t nat -I POSTROUTING -s 172.16.25.0/24 -o $1 -j MASQUERADE
+ adslip=`dig +short myip.opendns.com @resolver1.opendns.com -b 172.16.25.1`
+    echo $adslip >/tmp/$6ip
+
+  ;;
+
+tap26)
+     ip route add 172.16.26.0/24 dev tap_tap26 table $6 
+     ip route add default via $5 table $6 
+     ip rule add from  172.16.26.0/24 table $6
+  /sbin/ifconfig $1 mtu 1400
+     iptables -t nat -I POSTROUTING -s 172.16.26.0/24 -o $1 -j MASQUERADE
+adslip=`dig +short myip.opendns.com @resolver1.opendns.com -b 172.16.26.1`
+    echo $adslip >/tmp/$6ip
+
+  ;;
+tap27)
+     ip route add 172.16.27.0/24 dev tap_tap27 table $6 
+     ip route add default via $5 table $6 
+     ip rule add from  172.16.27.0/24 table $6
+  /sbin/ifconfig $1 mtu 1400
+     iptables -t nat -I POSTROUTING -s 172.16.27.0/24 -o $1 -j MASQUERADE
+adslip=`dig +short myip.opendns.com @resolver1.opendns.com -b 172.16.27.1`
+    echo $adslip >/tmp/$6ip
+
+  ;;
+tap28)
+     ip route add 172.16.28.0/24 dev tap_tap28 table $6 
+     ip route add default via $5 table $6 
+     ip rule add from  172.16.28.0/24 table $6
+  /sbin/ifconfig $1 mtu 1400
+     iptables -t nat -I POSTROUTING -s 172.16.28.0/24 -o $1 -j MASQUERADE
+adslip=`dig +short myip.opendns.com @resolver1.opendns.com -b 172.16.28.1`
+    echo $adslip >/tmp/$6ip
+
+  ;;
+tap29)
+     ip route add 172.16.29.0/24 dev tap_tap29 table $6 
+     ip route add default via $5 table $6 
+     ip rule add from  172.16.29.0/24 table $6
+  /sbin/ifconfig $1 mtu 1400
+     iptables -t nat -I POSTROUTING -s 172.16.29.0/24 -o $1 -j MASQUERADE
+adslip=`dig +short myip.opendns.com @resolver1.opendns.com -b 172.16.29.1`
+    echo $adslip >/tmp/$6ip
+
+  ;;
+tap30)
+     ip route add 172.16.30.0/24 dev tap_tap30 table $6 
+     ip route add default via $5 table $6 
+     ip rule add from  172.16.30.0/24 table $6
+  /sbin/ifconfig $1 mtu 1400
+     iptables -t nat -I POSTROUTING -s 172.16.30.0/24 -o $1 -j MASQUERADE
+    adslip=`dig +short myip.opendns.com @resolver1.opendns.com -b 172.16.30.1`
+    echo $adslip >/tmp/$6ip
+  ;;
+tap31)
+     ip route add 172.16.31.0/24 dev tap_tap31 table $6 
+     ip route add default via $5 table $6 
+     ip rule add from  172.16.31.0/24 table $6
+  /sbin/ifconfig $1 mtu 1400
+     iptables -t nat -I POSTROUTING -s 172.16.31.0/24 -o $1 -j MASQUERADE
+    adslip=`dig +short myip.opendns.com @resolver1.opendns.com -b 172.16.31.1`
+    echo $adslip >/tmp/$6ip
+  ;;
+tap32)
+     ip route add 172.16.32.0/24 dev tap_tap32 table $6 
+     ip route add default via $5 table $6 
+     ip rule add from  172.16.32.0/24 table $6
+  /sbin/ifconfig $1 mtu 1400
+     iptables -t nat -I POSTROUTING -s 172.16.32.0/24 -o $1 -j MASQUERADE
+    adslip=`dig +short myip.opendns.com @resolver1.opendns.com -b 172.16.32.1`
+    echo $adslip >/tmp/$6ip
+  ;;
+tap33)
+     ip route add 172.16.33.0/24 dev tap_tap33 table $6 
+     ip route add default via $5 table $6 
+     ip rule add from  172.16.33.0/24 table $6
+  /sbin/ifconfig $1 mtu 1400
+     iptables -t nat -I POSTROUTING -s 172.16.33.0/24 -o $1 -j MASQUERADE
+    adslip=`dig +short myip.opendns.com @resolver1.opendns.com -b 172.16.33.1`
+    echo $adslip >/tmp/$6ip
+  ;;
+tap34)
+     ip route add 172.16.34.0/24 dev tap_tap34 table $6 
+     ip route add default via $5 table $6 
+     ip rule add from  172.16.34.0/24 table $6
+  /sbin/ifconfig $1 mtu 1400
+     iptables -t nat -I POSTROUTING -s 172.16.34.0/24 -o $1 -j MASQUERADE
+    adslip=`dig +short myip.opendns.com @resolver1.opendns.com -b 172.16.34.1`
+    echo $adslip >/tmp/$6ip
+  ;;
+tap35)
+     ip route add 172.16.35.0/24 dev tap_tap35 table $6 
+     ip route add default via $5 table $6 
+     ip rule add from  172.16.35.0/24 table $6
+  /sbin/ifconfig $1 mtu 1400
+     iptables -t nat -I POSTROUTING -s 172.16.35.0/24 -o $1 -j MASQUERADE
+    adslip=`dig +short myip.opendns.com @resolver1.opendns.com -b 172.16.35.1`
+    echo $adslip >/tmp/$6ip
+  ;;
+tap36)
+     ip route add 172.16.36.0/24 dev tap_tap36 table $6 
+     ip route add default via $5 table $6 
+     ip rule add from  172.16.36.0/24 table $6
+  /sbin/ifconfig $1 mtu 1400
+     iptables -t nat -I POSTROUTING -s 172.16.36.0/24 -o $1 -j MASQUERADE
+    adslip=`dig +short myip.opendns.com @resolver1.opendns.com -b 172.16.36.1`
+    echo $adslip >/tmp/$6ip
+  ;;
+tap37)
+     ip route add 172.16.37.0/24 dev tap_tap37 table $6 
+     ip route add default via $5 table $6 
+     ip rule add from  172.16.37.0/24 table $6
+  /sbin/ifconfig $1 mtu 1400
+     iptables -t nat -I POSTROUTING -s 172.16.37.0/24 -o $1 -j MASQUERADE
+    adslip=`dig +short myip.opendns.com @resolver1.opendns.com -b 172.16.37.1`
+    echo $adslip >/tmp/$6ip
+  ;;
+tap38)
+     ip route add 172.16.38.0/24 dev tap_tap38 table $6 
+     ip route add default via $5 table $6 
+     ip rule add from  172.16.38.0/24 table $6
+  /sbin/ifconfig $1 mtu 1400
+     iptables -t nat -I POSTROUTING -s 172.16.38.0/24 -o $1 -j MASQUERADE
+    adslip=`dig +short myip.opendns.com @resolver1.opendns.com -b 172.16.38.1`
+    echo $adslip >/tmp/$6ip
+  ;;
+tap39)
+     ip route add 172.16.39.0/24 dev tap_tap39 table $6 
+     ip route add default via $5 table $6 
+     ip rule add from  172.16.39.0/24 table $6
+  /sbin/ifconfig $1 mtu 1400
+     iptables -t nat -I POSTROUTING -s 172.16.39.0/24 -o $1 -j MASQUERADE
+    adslip=`dig +short myip.opendns.com @resolver1.opendns.com -b 172.16.39.1`
+    echo $adslip >/tmp/$6ip
+  ;;
+tap40)
+     ip route add 172.16.40.0/24 dev tap_tap40 table $6 
+     ip route add default via $5 table $6 
+     ip rule add from  172.16.40.0/24 table $6
+  /sbin/ifconfig $1 mtu 1400
+     iptables -t nat -I POSTROUTING -s 172.16.40.0/24 -o $1 -j MASQUERADE
+    adslip=`dig +short myip.opendns.com @resolver1.opendns.com -b 172.16.40.1`
+    echo $adslip >/tmp/$6ip
+  ;;
+tap41)
+     ip route add 172.16.41.0/24 dev tap_tap41 table $6 
+     ip route add default via $5 table $6 
+     ip rule add from  172.16.41.0/24 table $6
+  /sbin/ifconfig $1 mtu 1400
+     iptables -t nat -I POSTROUTING -s 172.16.41.0/24 -o $1 -j MASQUERADE
+    adslip=`dig +short myip.opendns.com @resolver1.opendns.com -b 172.16.41.1`
+    echo $adslip >/tmp/$6ip
+  ;;
+tap42)
+     ip route add 172.16.42.0/24 dev tap_tap42 table $6 
+     ip route add default via $5 table $6 
+     ip rule add from  172.16.42.0/24 table $6
+  /sbin/ifconfig $1 mtu 1400
+     iptables -t nat -I POSTROUTING -s 172.16.42.0/24 -o $1 -j MASQUERADE
+    adslip=`dig +short myip.opendns.com @resolver1.opendns.com -b 172.16.42.1`
+    echo $adslip >/tmp/$6ip
+  ;;
+tap43)
+     ip route add 172.16.43.0/24 dev tap_tap43 table $6 
+     ip route add default via $5 table $6 
+     ip rule add from  172.16.43.0/24 table $6
+  /sbin/ifconfig $1 mtu 1400
+     iptables -t nat -I POSTROUTING -s 172.16.43.0/24 -o $1 -j MASQUERADE
+    adslip=`dig +short myip.opendns.com @resolver1.opendns.com -b 172.16.43.1`
+    echo $adslip >/tmp/$6ip
+  ;;
+tap44)
+     ip route add 172.16.44.0/24 dev tap_tap44 table $6 
+     ip route add default via $5 table $6 
+     ip rule add from  172.16.44.0/24 table $6
+  /sbin/ifconfig $1 mtu 1400
+     iptables -t nat -I POSTROUTING -s 172.16.44.0/24 -o $1 -j MASQUERADE
+    adslip=`dig +short myip.opendns.com @resolver1.opendns.com -b 172.16.44.1`
+    echo $adslip >/tmp/$6ip
+  ;;
+tap45)
+     ip route add 172.16.45.0/24 dev tap_tap45 table $6 
+     ip route add default via $5 table $6 
+     ip rule add from  172.16.45.0/24 table $6
+  /sbin/ifconfig $1 mtu 1400
+     iptables -t nat -I POSTROUTING -s 172.16.45.0/24 -o $1 -j MASQUERADE
+    adslip=`dig +short myip.opendns.com @resolver1.opendns.com -b 172.16.45.1`
+    echo $adslip >/tmp/$6ip
+  ;;
+tap46)
+     ip route add 172.16.46.0/24 dev tap_tap46 table $6 
+     ip route add default via $5 table $6 
+     ip rule add from  172.16.46.0/24 table $6
+  /sbin/ifconfig $1 mtu 1400
+     iptables -t nat -I POSTROUTING -s 172.16.46.0/24 -o $1 -j MASQUERADE
+    adslip=`dig +short myip.opendns.com @resolver1.opendns.com -b 172.16.46.1`
+    echo $adslip >/tmp/$6ip
+  ;;
+tap47)
+     ip route add 172.16.47.0/24 dev tap_tap47 table $6 
+     ip route add default via $5 table $6 
+     ip rule add from  172.16.47.0/24 table $6
+  /sbin/ifconfig $1 mtu 1400
+     iptables -t nat -I POSTROUTING -s 172.16.47.0/24 -o $1 -j MASQUERADE
+    adslip=`dig +short myip.opendns.com @resolver1.opendns.com -b 172.16.47.1`
+    echo $adslip >/tmp/$6ip
+  ;;
+tap48)
+     ip route add 172.16.48.0/24 dev tap_tap48 table $6 
+     ip route add default via $5 table $6 
+     ip rule add from  172.16.48.0/24 table $6
+  /sbin/ifconfig $1 mtu 1400
+     iptables -t nat -I POSTROUTING -s 172.16.48.0/24 -o $1 -j MASQUERADE
+    adslip=`dig +short myip.opendns.com @resolver1.opendns.com -b 172.16.48.1`
+    echo $adslip >/tmp/$6ip
+  ;;
+tap49)
+     ip route add 172.16.49.0/24 dev tap_tap49 table $6 
+     ip route add default via $5 table $6 
+     ip rule add from  172.16.49.0/24 table $6
+  /sbin/ifconfig $1 mtu 1400
+     iptables -t nat -I POSTROUTING -s 172.16.49.0/24 -o $1 -j MASQUERADE
+    adslip=`dig +short myip.opendns.com @resolver1.opendns.com -b 172.16.49.1`
+    echo $adslip >/tmp/$6ip
+  ;;
+tap50)
+     ip route add 172.16.50.0/24 dev tap_tap50 table $6 
+     ip route add default via $5 table $6 
+     ip rule add from  172.16.50.0/24 table $6
+  /sbin/ifconfig $1 mtu 1400
+     iptables -t nat -I POSTROUTING -s 172.16.50.0/24 -o $1 -j MASQUERADE
+    adslip=`dig +short myip.opendns.com @resolver1.opendns.com -b 172.16.50.1`
+    echo $adslip >/tmp/$6ip
+  ;;
+
+  *)
+esac
+ifconfig $1 txqueuelen 1000
+chmod 666 /tmp/$6ip
+ip route flush cache
+exit 0
+
