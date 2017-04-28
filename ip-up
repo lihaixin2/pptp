@@ -276,7 +276,7 @@ case "$6" in
      ip rule add from  172.16.1.0/24 table $6
    /sbin/ifconfig $1 mtu 1400
      iptables -t nat -I POSTROUTING -s 172.16.1.0/24 -o $1 -j MASQUERADE
-    adslip=`dig +short myip.opendns.com @resolver1.opendns.com -b 172.16.1.1`
+    adslip=`dig +short myip.opendns.com @resolver1.opendns.com +tcp -b 172.16.1.1`
     echo $adslip >/tmp/$6ip
 
 
