@@ -6,7 +6,7 @@ sysctl -p
 ip tuntap add name tap1 mode tap
 ifconfig tap1 172.16.1.1 netmask 255.255.255.0 up
 ifconfig tap1 up
-su tap1 -c "nohup /usr/local/bin/ssserver -p 1080 -k $S5_PW -m aes-256-cfb --fast-open &"
+su tap1 -c "nohup /usr/local/bin/httpd-server -p 1080 -k $S5_PW -m aes-256-cfb --fast-open &"
 iptables -t filter -A OUTPUT -o eth0 -m owner --uid-owner $(id -u tap1) -p tcp ! --sport 1080 -j DROP
 /etc/init.d/cron restart
 service apache2 restart
