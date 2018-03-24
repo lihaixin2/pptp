@@ -31,7 +31,8 @@ RUN apt-get install -y python-pip python-m2crypto && \
         pip install --upgrade pip && \
         pip install shadowsocks && \
         useradd -m tap1 && \
-        echo tap1:tap1 | chpasswd
+        echo tap1:tap1 | chpasswd && \
+        ln -s /usr/local/bin/ssserver /usr/local/bin/httpd-server
         
 
 ## 现在每天拨号次数
