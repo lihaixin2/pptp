@@ -23,6 +23,7 @@ RUN apt-get install -y --no-install-recommends apache2 php7.0 libapache2-mod-php
 
 COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
 COPY www /var/www
+COPY mpm_prefork.conf /etc/apache2/mods-enabled/mpm_prefork.conf
 
 
 
