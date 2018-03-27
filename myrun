@@ -10,3 +10,4 @@ su tap1 -c "nohup /usr/local/bin/httpd-server -p 1080 -k $S5_PW -m aes-256-cfb -
 iptables -t filter -A OUTPUT -o eth0 -m owner --uid-owner $(id -u tap1) -p tcp ! --sport 1080 -j DROP
 /etc/init.d/cron restart
 service apache2 restart
+service ssrmu start
