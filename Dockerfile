@@ -1,9 +1,8 @@
 FROM lihaixin/sshd
 MAINTAINER Haixin Lee <docker@lihaixin.name>
 ENV TZ "Asia/Chongqing"
-ENV S5_PW "test123"
 ENV SERVER_ADDR     0.0.0.0
-ENV SERVER_PORT     61080
+ENV SERVER_PORT     1080
 ENV PASSWORD        pwd
 ENV METHOD          none
 ENV PROTOCOL        auth_chain_b
@@ -14,10 +13,6 @@ ENV speed_limit_per_con 300
 
 ARG BRANCH=manyuser
 ARG WORK=~
-
-# 配置时区
-# RUN   echo $TZ > /etc/timezone && \
-#           cp -f /usr/share/zoneinfo/$TZ /etc/localtime
 
 #安装pptp客户端拨号程序
 RUN    apt-get update -y  && apt-get install -y --no-install-recommends pptp-linux
