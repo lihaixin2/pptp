@@ -10,6 +10,7 @@ ENV PROTOCOLPARAM   1
 ENV OBFS            tls1.2_ticket_auth
 ENV TIMEOUT         300
 ENV speed_limit_per_con 300
+ENV OPTIONS	-v
 
 ARG BRANCH=manyuser
 ARG WORK=~
