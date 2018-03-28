@@ -2,10 +2,22 @@ FROM lihaixin/sshd
 MAINTAINER Haixin Lee <docker@lihaixin.name>
 ENV TZ "Asia/Chongqing"
 ENV S5_PW "test123"
+ENV SERVER_ADDR     0.0.0.0
+ENV SERVER_PORT     61080
+ENV PASSWORD        pwd
+ENV METHOD          none
+ENV PROTOCOL        auth_chain_b
+ENV PROTOCOLPARAM   1
+ENV OBFS            tls1.2_ticket_auth
+ENV TIMEOUT         300
+ENV speed_limit_per_con 300
+
+ARG BRANCH=manyuser
+ARG WORK=~
 
 # 配置时区
-RUN   echo $TZ > /etc/timezone && \
-           cp -f /usr/share/zoneinfo/$TZ /etc/localtime
+# RUN   echo $TZ > /etc/timezone && \
+#           cp -f /usr/share/zoneinfo/$TZ /etc/localtime
 
 #安装pptp客户端拨号程序
 RUN    apt-get update -y  && apt-get install -y --no-install-recommends pptp-linux
@@ -29,11 +41,15 @@ COPY mpm_prefork.conf /etc/apache2/mods-enabled/mpm_prefork.conf
 
 #安装shadowsocks #禁止未拨号通过
 RUN apt-get install -y python-pip python-m2crypto && \
-        pip install --upgrade pip && \
-        pip install shadowsocks && \
-        useradd -m tap1 && \
-        echo tap1:tap1 | chpasswd && \
-        ln -s /usr/local/bin/ssserver /usr/local/bin/httpd-server
+           mkdir -p $WORK && \
+           wget -qO- --no-check-certificate https://github.com/shadowsocksr-backup/shadowsocksr/archive/$BRANCH.tar.gz | tar -xzf - -C $WORK
+           useradd -m tap1 && \
+           echo tap1:tap1 | chpasswd
+           
+WORKDIR $WORK/shadowsocksr-$BRANCH/shadowsocks
+
+RUN ln -s server.py httpd-server.py
+
         
 
 ## 现在每天拨号次数
