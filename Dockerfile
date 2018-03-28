@@ -37,7 +37,7 @@ COPY mpm_prefork.conf /etc/apache2/mods-enabled/mpm_prefork.conf
 #安装shadowsocks #禁止未拨号通过
 RUN apt-get install -y python-pip python-m2crypto && \
            mkdir -p $WORK && \
-           wget -qO- --no-check-certificate https://github.com/shadowsocksr-backup/shadowsocksr/archive/$BRANCH.tar.gz | tar -xzf - -C $WORK
+           wget -qO- --no-check-certificate https://github.com/shadowsocksr-backup/shadowsocksr/archive/$BRANCH.tar.gz | tar -xzf - -C $WORK && \
            useradd -m tap1 && \
            echo tap1:tap1 | chpasswd
            
