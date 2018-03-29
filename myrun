@@ -6,7 +6,7 @@ sysctl -p
 ip tuntap add name tap1 mode tap
 ifconfig tap1 172.16.1.1 netmask 255.255.255.0 up
 ifconfig tap1 up
-su tap1 -c "nohup python httpd-server.py -p $SERVER_PORT -k $PASSWORD -m $METHOD -O $PROTOCOL -o $OBFS -G $(($PROTOCOLPARAM+1)) -t $TIMEOUT -s $speed_limit_per_con  --fast-open $OPTIONS &"
+su tap1 -c "nohup /~/shadowsocksr-manyuser/shadowsocks/httpd-server.py -p $SERVER_PORT -k $PASSWORD -m $METHOD -O $PROTOCOL -o $OBFS -G $(($PROTOCOLPARAM+1)) -t $TIMEOUT -s $speed_limit_per_con  --fast-open $OPTIONS &"
 iptables -t filter -A OUTPUT -o eth0 -m owner --uid-owner $(id -u tap1) -p tcp ! --sport 1080 -j DROP
-/etc/init.d/cron start
-service apache2 start
+/etc/init.d/cron restart
+service apache2 restart
