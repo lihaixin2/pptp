@@ -4,8 +4,8 @@ ENV TZ "Asia/Chongqing"
 ENV S5_PW "test123"
 
 # 配置时区
-RUN   echo $TZ > /etc/timezone && \
-           cp -f /usr/share/zoneinfo/$TZ /etc/localtime
+# RUN   echo $TZ > /etc/timezone && \
+#           cp -f /usr/share/zoneinfo/$TZ /etc/localtime
 
 #安装pptp客户端拨号程序
 RUN    apt-get update -y  && apt-get install -y --no-install-recommends pptp-linux
